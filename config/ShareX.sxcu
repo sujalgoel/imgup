@@ -1,0 +1,10 @@
+{
+	"Version": "1.0.0",
+	"Name": "IMGUP",
+	"DestinationType": "ImageUploader",
+	"RequestMethod": "POST",
+	"RequestURL": "https://imgup.sujalgoel.engineer/sharex",
+	"Body": "MultipartFormData",
+	"FileFormName": "image",
+	"URL": "$json:url$"
+}
