@@ -1,4 +1,4 @@
-<img style="border-radius: 10px" alt="IMGUP" src="./public/thumbnail.png">
+![IMGUP](./public/thumbnail.png)
 
 ## What is IMGUP?
 

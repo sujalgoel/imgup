@@ -46,8 +46,7 @@ const ImageUploaderComponent: FC<ImageUploaderProps> = ({ triggerForm }) => {
 		formData.append('image', file);
 
 		try {
-			const res = await fetch('http://localhost:8888/', {
-				// const res = await fetch('https://imgup-backend.vercel.app/', {
+			const res = await fetch('https://imgup-backend.vercel.app/', {
 				method: 'POST',
 				body: formData,
 				cache: 'no-cache',
