@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    overflow: hidden;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+body {
+    background-color: black;
+}
+
+/* bad practice */
+.Toastify__toast-container {
+    width: auto !important;
+}

@@ -1,36 +1,59 @@
-<img width="150" height="150" align="left" style="float: left; margin: 0 10px 0 0;" alt="IMGUP" src="https://sujalgoel.engineer/assets/images/avatar.png">
+<img style="border-radius: 10px" alt="IMGUP" src="./public/thumbnail.png">
 
-# IMGUP 🖼
+## What is IMGUP?
 
-<a href="https://repl.it/github/sujalgoel/IMGUP"><img src="https://repl.it/badge/github/sujalgoel/IMGUP" /></a>
-<a href="https://github.com/sujalgoel/IMGUP/stargazers"><img src="https://img.shields.io/github/stars/sujalgoel/IMGUP.svg?label=Stars" /></a>
-<a href="https://github.com/sujalgoel/IMGUP/blob/network/members"><img src="https://img.shields.io/github/forks/sujalgoel/IMGUP.svg?color=ff0000&label=Forks" /></a>
-<a href="https://github.com/sujalgoel/IMGUP/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-orange" /></a>
+**IMGUP** is a user-friendly image sharing platform built using the latest version of Next.js. With its modern design and intuitive interface, sharing images has never been more convenient.
 
-> An image uploader API and website compatible with ShareX built in Node.js.
+## Key Features
 
-## Setup ✏️
+- Seamlessly upload and share images with friends and family.
+- Utilizes the power of Next.js for a smooth and responsive user experience.
+- Boasts a clean and visually appealing UI to enhance user interaction.
 
-#### config.json
+## Getting Started
 
-```json
-{
-	"port": 3000,
-	"domain": "https://imgup.sujalgoel.engineer"
-}
+To begin using IMGUP and start sharing images, just follow these steps:
+
+1. **Clone the Repository:**
+
+```bash
+git clone https://github.com/sujalgoel/imgup.git
 ```
 
-#### ShareX.sxcu
+2. **Install Dependencies:**
 
-```json
-{
-	"Version": "1.0.0",
-	"Name": "IMGUP",
-	"DestinationType": "ImageUploader",
-	"RequestMethod": "POST",
-	"RequestURL": "https://imgup.sujalgoel.engineer/sharex",
-	"Body": "MultipartFormData",
-	"FileFormName": "image",
-	"URL": "$json:url$"
-}
+```bash
+npm install
 ```
+
+3. **Start the Development Server:**
+
+```bash
+npm run dev
+```
+
+4. **Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.**
+
+## How to Contribute
+
+I welcome contributions from the community! If you're interested in contributing, here's what you need to do:
+
+1. **Fork the Repository**
+2. **Create a new branch for your bug fix or feature.**
+3. **Commit your changes and push the branch to your fork.**
+4. **Open a Pull Request and describe the changes you've made.**
+
+> Before submitting your pull request, please ensure that your code aligns with the current coding standards.
+
+## License
+
+**IMGUP** is an open-source project released under the [**`CC BY-NC-ND 4.0`**](https://creativecommons.org/licenses/by-nc-nd/4.0/) license.
+
+## Get in Touch
+
+If you have any questions or need support, feel free to contact me:
+
+- Visit My Website: [**sujalgoel.me**](https://sujalgoel.me)
+- GitHub Issues: [**github.com/sujalgoel/imgup/issues**](https://github.com/sujalgoel/imgup/issues)
+
+---
