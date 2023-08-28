@@ -25,7 +25,7 @@ export default function DynamicImagePage(
 		const isValid = await isValidImage(pathname);
 
 		return (
-			<div className='flex flex-col h-screen'>
+			<div className='flex flex-col h-screen bg-gradient-to-tl from-black via-zinc-600/20 to-black'>
 				<ParticlesComponent className='absolute inset-0 -z-10' quantity={500} />
 
 				<div className='flex-grow flex items-center justify-center'>
