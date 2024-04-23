@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import 'tailwindcss/tailwind.css';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -39,23 +38,6 @@ export default function HomePage(): JSX.Element {
 			<ToastContainer />
 
 			<ImageUploaderComponent triggerForm={triggerForm} />
-
-			<div className='mt-10 text-center animate-fade-in'>
-				<h2 className='text-sm text-zinc-500'>
-					Click on the text above to upload an image
-				</h2>
-
-				<h2 className='text-xs text-zinc-500'>
-					Front end elegantly tailored after{' '}
-					<Link
-						target='_blank'
-						href='https://chronark.com'
-						className='underline duration-500 hover:text-zinc-300'
-					>
-						chronark
-					</Link>
-				</h2>
-			</div>
 		</div>
 	);
 }
