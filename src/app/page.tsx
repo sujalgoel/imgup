@@ -38,6 +38,12 @@ export default function HomePage(): JSX.Element {
 			<ToastContainer />
 
 			<ImageUploaderComponent triggerForm={triggerForm} />
+
+			<div className='mt-10 text-center animate-fade-in'>
+				<h2 className='text-sm text-zinc-500'>
+					Click on the text above to upload an image
+				</h2>
+			</div>
 		</div>
 	);
 }
