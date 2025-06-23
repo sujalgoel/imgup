@@ -1,18 +1,177 @@
+@import 'tailwindcss';
+
 * {
-    margin: 0;
-    padding: 0;
-    outline: none;
-    overflow: hidden;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	overflow: hidden;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
 }
 
 body {
-    background-color: black;
+	background-color: black;
 }
 
 /* bad practice */
 .Toastify__toast-container {
-    width: auto !important;
+	width: auto !important;
+}
+
+/* Add this to your globals.css */
+
+.curtain-container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.curtain-line {
+	width: 100vw;
+	height: 1px;
+	background: linear-gradient(
+		to right,
+		transparent,
+		rgba(209, 213, 219, 0.5),
+		transparent
+	);
+	animation: curtain-reveal 4s ease-in-out forwards;
+}
+
+.curtain-line.top {
+	background: linear-gradient(
+		to left,
+		transparent,
+		rgba(209, 213, 219, 0.5),
+		transparent
+	);
+	animation: curtain-reveal-left 3s ease-in-out forwards;
+}
+
+.curtain-line.bottom {
+	background: linear-gradient(
+		to right,
+		transparent,
+		rgba(209, 213, 219, 0.5),
+		transparent
+	);
+	animation: curtain-reveal-right 3s ease-in-out forwards;
+}
+
+.title-text {
+	font-size: 4rem;
+	font-weight: 600;
+	color: transparent;
+	background: white;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+	white-space: nowrap;
+	cursor: pointer;
+	transition: transform 0.3s ease;
+	animation: title-reveal 4s ease-out forwards;
+	z-index: 10;
+}
+
+.title-text:hover {
+	transform: scale(1.02);
+}
+
+.fade-in-element {
+	animation: fade-in 3s ease-in-out forwards;
+}
+
+/* Keyframes */
+@keyframes curtain-reveal-left {
+	0% {
+		transform: translateX(-150%);
+		opacity: 1;
+	}
+	25% {
+		transform: translateX(0%);
+		opacity: 1;
+	}
+	75% {
+		transform: translateX(0%);
+		opacity: 1;
+	}
+	100% {
+		transform: translateX(-150%);
+		opacity: 1;
+	}
+}
+
+@keyframes curtain-reveal-right {
+	0% {
+		transform: translateX(150%);
+		opacity: 1;
+	}
+	25% {
+		transform: translateX(0%);
+		opacity: 1;
+	}
+	75% {
+		transform: translateX(0%);
+		opacity: 1;
+	}
+	100% {
+		transform: translateX(150%);
+		opacity: 1;
+	}
+}
+
+@keyframes title-reveal {
+	0% {
+		opacity: 0;
+		line-height: 0;
+		letter-spacing: 0.2em;
+	}
+	25% {
+		opacity: 0;
+		line-height: 0;
+	}
+	50% {
+		opacity: 1;
+		line-height: 1;
+		letter-spacing: normal;
+	}
+	75% {
+		opacity: 1;
+		line-height: 1;
+	}
+	100% {
+		opacity: 1;
+		line-height: 1;
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	25% {
+		opacity: 0;
+	}
+	80% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+/* Responsive text sizes */
+@media (min-width: 768px) {
+	.title-text {
+		font-size: 7rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.title-text {
+		font-size: 9rem;
+	}
 }

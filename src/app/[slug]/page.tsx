@@ -1,81 +1,69 @@
-import { Metadata } from 'next';
-import 'tailwindcss/tailwind.css';
-import ParticlesComponent from '../../components/ParticlesComponent';
-import DynamicImageComponent from '../../components/DynamicImageComponent';
+export const dynamic = 'force-dynamic';
 
-interface Request {
-	params: {
-		slug: string;
-	};
-}
+import ParticlesComponent from '@/components/ParticlesComponent';
+import DynamicImageComponent from '@/components/DynamicImageComponent';
+import ImageActionButtonsComponent from '@/components/ImageActionButtonsComponent';
 
-const isValidImage = async (pathname: string) => {
-	const res = await fetch(`https://i.sujalgoel.me/${pathname}`, {
-		cache: 'no-cache',
-	});
-	return res.status === 200;
+const getImageUrl: (slug: string) => Promise<string | null> = async (
+	slug: string,
+): Promise<string | null> => {
+	try {
+		const res: Response = await fetch(
+			`http://localhost:3000/api/image/${slug}`,
+			{
+				cache: 'no-store',
+			},
+		);
+		if (!res.ok) return null;
+
+		const data = await res.json();
+
+		return data.url as string;
+	} catch (err) {
+		console.error('Failed to fetch image:', err);
+		return null;
+	}
 };
 
-export default function DynamicImagePage(
-	request: Request,
-): Promise<JSX.Element> {
-	const pathname = request.params.slug;
+export default async function DynamicImagePage({
+	params,
+}: {
+	params: Promise<{ slug: string }>;
+}): Promise<React.JSX.Element> {
+	const { slug } = await params;
+	const url = await getImageUrl(slug);
 
-	return (async () => {
-		const isValid = await isValidImage(pathname);
+	return (
+		<div className='flex! flex-col! h-screen! bg-gradient-to-tl! from-black! via-zinc-600/20! to-black!'>
+			<ParticlesComponent
+				className='absolute! inset-0! -z-10!'
+				quantity={500}
+			/>
 
-		return (
-			<div className='flex flex-col h-screen bg-gradient-to-tl from-black via-zinc-600/20 to-black'>
-				<ParticlesComponent className='absolute inset-0 -z-10' quantity={500} />
-
-				<div className='flex-grow flex items-center justify-center'>
-					<div className='w-1/3 max-sm:w-3/4 max-md:w-1/2 max-lg:w-1/2 max-xl:w-1/3'>
-						<div className='p-5 rounded-lg border border-white'>
-							{isValid ? (
-								<DynamicImageComponent imagePath={pathname} />
-							) : (
-								<div className='text-center text-2xl text-white'>
-									<span className='font-bold'>404</span> | Image not found
-								</div>
-							)}
+			<div className='flex-grow! flex! items-center! justify-center!'>
+				{url ? (
+					<div className='w-11/12! sm:w-3/4! md:w-2/3! lg:w-1/2! xl:w-2/5! max-w-4xl!'>
+						<div className='p-5! rounded-lg! border! border-white!'>
+							<DynamicImageComponent imagePath={url} />
+							<ImageActionButtonsComponent variant='image' />
 						</div>
 					</div>
-				</div>
+				) : (
+					<div className='text-center! w-full!'>
+						<div className='flex! flex-col! items-center! justify-center!'>
+							<div className='relative! w-full!'>
+								<div className='text-8xl! md:text-9xl! font-black! text-transparent! bg-gradient-to-r! from-white! via-slate-500! to-white! bg-clip-text! animate-pulse!'>
+									404
+								</div>
+								<div className='absolute! inset-0! text-8xl! md:text-9xl! font-black! text-white/40! blur-sm!'>
+									404
+								</div>
+							</div>
+							<ImageActionButtonsComponent variant='error' />
+						</div>
+					</div>
+				)}
 			</div>
-		);
-	})();
-}
-
-export function generateMetadata({ params }: Request): Metadata {
-	return {
-		themeColor: '#000001',
-		title: `${params.slug} | Imgup`,
-		description:
-			'Upload images and get a link to share them with your friends.',
-		twitter: {
-			card: 'summary_large_image',
-			title: `${params.slug} | Imgup`,
-		},
-		openGraph: {
-			type: 'website',
-			locale: 'en_US',
-			title: `${params.slug} | Imgup`,
-			url: 'https://imgup.sujalgoel.me/',
-			siteName: `${params.slug} | Imgup`,
-			description:
-				'Upload images and get a link to share them with your friends.',
-			images: [
-				{
-					alt: `${params.slug} | Imgup`,
-					url: `https://i.sujalgoel.me/${params.slug}`,
-				},
-			],
-		},
-		icons: {
-			icon: ['/favicon.ico'],
-			apple: ['/apple-touch-icon.png'],
-			shortcut: ['/apple-touch-icon.png'],
-		},
-		manifest: './site.webmanifest',
-	};
+		</div>
+	);
 }
