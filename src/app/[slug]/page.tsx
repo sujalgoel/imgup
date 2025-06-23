@@ -1,5 +1,7 @@
 export const dynamic = 'force-dynamic';
 
+import { Metadata } from 'next';
+
 import ParticlesComponent from '@/components/ParticlesComponent';
 import DynamicImageComponent from '@/components/DynamicImageComponent';
 import ImageActionButtonsComponent from '@/components/ImageActionButtonsComponent';
@@ -9,7 +11,8 @@ const getImageUrl: (slug: string) => Promise<string | null> = async (
 ): Promise<string | null> => {
 	try {
 		const res: Response = await fetch(
-			`http://localhost:3000/api/image/${slug}`,
+			`https://imgup.sujalgoel.me/api/image/${slug}`,
+			// `http://localhost:3000/api/image/${slug}`,
 			{
 				cache: 'no-store',
 			},
@@ -24,6 +27,82 @@ const getImageUrl: (slug: string) => Promise<string | null> = async (
 		return null;
 	}
 };
+
+// Generate dynamic metadata for each image
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+	const { slug } = await params;
+	const imageUrl = await getImageUrl(slug);
+
+	const baseUrl = 'https://imgup.sujalgoel.me';
+	const pageUrl = `${baseUrl}/${slug}`;
+
+	if (!imageUrl) {
+		// Fallback metadata for 404 images
+		return {
+			title: 'Image Not Found | Imgup',
+			description:
+				'The requested image could not be found. Upload and share images instantly with Imgup.',
+			openGraph: {
+				title: 'Image Not Found | Imgup',
+				description:
+					'The requested image could not be found. Upload and share images instantly with Imgup.',
+				url: pageUrl,
+				siteName: 'Imgup',
+				images: [
+					{
+						url: `${baseUrl}/thumbnail.jpg`,
+						width: 1200,
+						height: 630,
+						alt: 'Imgup - Fast & Secure Image Uploader',
+						type: 'image/jpeg',
+					},
+				],
+			},
+			twitter: {
+				card: 'summary_large_image',
+				title: 'Image Not Found | Imgup',
+				description: 'The requested image could not be found.',
+				images: [`${baseUrl}/thumbnail.jpg`],
+			},
+		};
+	}
+
+	const optimizedImageUrl = `${baseUrl}/api/image/optimize/${slug}?w=1200&h=630&q=75`;
+
+	console.log('Optimized Image URL:', optimizedImageUrl);
+
+	// Dynamic metadata with the actual uploaded image
+	return {
+		title: `Shared Image | Imgup`,
+		description: `View and download this image shared via Imgup. Upload and share your own images instantly.`,
+		openGraph: {
+			type: 'website',
+			url: pageUrl,
+			siteName: 'Imgup',
+			title: `Shared Image | Imgup`,
+			description: `View and download this image shared via Imgup. Upload and share your own images instantly.`,
+			images: [
+				{
+					url: optimizedImageUrl,
+					width: 1200,
+					height: 630,
+					alt: `Image shared via Imgup - ${slug}`,
+					type: 'image/jpeg',
+				},
+			],
+		},
+		twitter: {
+			card: 'summary_large_image',
+			title: `Shared Image | Imgup`,
+			description: `View and download this image shared via Imgup.`,
+			images: [optimizedImageUrl],
+		},
+	};
+}
 
 export default async function DynamicImagePage({
 	params,

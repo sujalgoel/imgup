@@ -1,7 +1,7 @@
 {
 	"name": "imgup",
 	"description": "Upload images and get a link to share them with your friends.",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"scripts": {
 		"dev": "next",
 		"build": "next build",
