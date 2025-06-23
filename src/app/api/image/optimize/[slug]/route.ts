@@ -1,4 +1,5 @@
 import sharp from 'sharp';
+import { NextRequest, NextResponse } from 'next/server';
 
 const getImageUrl: (slug: string) => Promise<string | null> = async (
 	slug: string,
@@ -23,11 +24,11 @@ const getImageUrl: (slug: string) => Promise<string | null> = async (
 };
 
 export async function GET(
-	request: Request,
+	req: NextRequest,
 	{ params }: { params: { slug: string } },
 ) {
 	const { slug } = params;
-	const { searchParams } = new URL(request.url);
+	const { searchParams } = new URL(req.url);
 
 	const width = parseInt(searchParams.get('w') || '1200');
 	const height = parseInt(searchParams.get('h') || '630');
@@ -53,14 +54,18 @@ export async function GET(
 			})
 			.toBuffer();
 
-		return new Response(optimizedBuffer, {
+		return new NextResponse(optimizedBuffer, {
 			headers: {
 				'Content-Type': 'image/jpeg',
 				'Cache-Control': 'public, max-age=31536000, immutable',
+				'X-Optimized': 'true',
 			},
 		});
 	} catch (err) {
 		console.error('Image optimization failed:', err);
-		return new Response('Optimization failed', { status: 500 });
+		return NextResponse.json(
+			{ error: 'Optimization failed' },
+			{ status: 500 },
+		);
 	}
 }
