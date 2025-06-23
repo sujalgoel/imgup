@@ -25,9 +25,9 @@ const getImageUrl: (slug: string) => Promise<string | null> = async (
 
 export async function GET(
 	req: NextRequest,
-	{ params }: { params: { slug: string } },
+	{ params }: { params: Promise<{ slug: string }> },
 ) {
-	const { slug } = params;
+	const { slug } = await params;
 	const { searchParams } = new URL(req.url);
 
 	const width = parseInt(searchParams.get('w') || '1200');
