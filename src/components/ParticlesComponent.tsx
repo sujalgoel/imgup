@@ -155,7 +155,6 @@ export default function Particles({
 	const animate = useCallback(() => {
 		clearContext();
 		circles.current.forEach((circle: Circle, i: number) => {
-			// Handle the alpha value
 			const edge = [
 				circle.x + circle.translateX - circle.size,
 				canvasSize.current.w -
@@ -190,19 +189,15 @@ export default function Particles({
 				(mouse.current.y / (staticity / circle.magnetism) -
 					circle.translateY) /
 				ease;
-			// circle gets out of the canvas
 			if (
 				circle.x < -circle.size ||
 				circle.x > canvasSize.current.w + circle.size ||
 				circle.y < -circle.size ||
 				circle.y > canvasSize.current.h + circle.size
 			) {
-				// remove the circle from the array
 				circles.current.splice(i, 1);
-				// create a new circle
 				const newCircle = circleParams();
 				drawCircle(newCircle);
-				// update the circle position
 			} else {
 				drawCircle(
 					{

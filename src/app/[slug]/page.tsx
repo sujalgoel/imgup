@@ -28,7 +28,6 @@ const getImageUrl: (slug: string) => Promise<string | null> = async (
 	}
 };
 
-// Generate dynamic metadata for each image
 export async function generateMetadata({
 	params,
 }: {
@@ -41,7 +40,6 @@ export async function generateMetadata({
 	const pageUrl = `${baseUrl}/${slug}`;
 
 	if (!imageUrl) {
-		// Fallback metadata for 404 images
 		return {
 			title: 'Image Not Found | Imgup',
 			description:
@@ -75,7 +73,6 @@ export async function generateMetadata({
 
 	console.log('Optimized Image URL:', optimizedImageUrl);
 
-	// Dynamic metadata with the actual uploaded image
 	return {
 		title: `Shared Image | Imgup`,
 		description: `View and download this image shared via Imgup. Upload and share your own images instantly.`,

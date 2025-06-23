@@ -23,6 +23,19 @@ const getImageUrl: (slug: string) => Promise<string | null> = async (
 	}
 };
 
+const fetchImageBuffer = async (imageUrl: string): Promise<Buffer | null> => {
+	try {
+		const response = await fetch(imageUrl);
+		if (!response.ok) return null;
+
+		const arrayBuffer = await response.arrayBuffer();
+		return Buffer.from(arrayBuffer);
+	} catch (err) {
+		console.error('Failed to fetch image buffer:', err);
+		return null;
+	}
+};
+
 export async function GET(
 	req: NextRequest,
 	{ params }: { params: Promise<{ slug: string }> },
@@ -35,15 +48,22 @@ export async function GET(
 	const quality = parseInt(searchParams.get('q') || '75');
 
 	try {
-		// Get original image
-		const originalImage = await getImageUrl(slug);
+		const originalImageUrl = await getImageUrl(slug);
 
-		if (!originalImage) {
+		if (!originalImageUrl) {
 			return new Response('Image not found', { status: 404 });
 		}
 
-		// Compress and resize
-		const optimizedBuffer = await sharp(originalImage)
+		const imageBuffer = await fetchImageBuffer(originalImageUrl);
+
+		if (!imageBuffer) {
+			return NextResponse.json(
+				{ error: 'Failed to fetch image data' },
+				{ status: 404 },
+			);
+		}
+
+		const optimizedBuffer = await sharp(imageBuffer)
 			.resize(width, height, {
 				fit: 'inside',
 				withoutEnlargement: true,
