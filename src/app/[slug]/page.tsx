@@ -12,7 +12,6 @@ const getImageUrl: (slug: string) => Promise<string | null> = async (
 	try {
 		const res: Response = await fetch(
 			`https://imgup.sujalgoel.me/api/image/${slug}`,
-			// `http://localhost:3000/api/image/${slug}`,
 			{
 				cache: 'no-store',
 			},
@@ -75,13 +74,13 @@ export async function generateMetadata({
 
 	return {
 		title: `Shared Image | Imgup`,
-		description: `View and download this image shared via Imgup. Upload and share your own images instantly.`,
+		description: `View this image shared via Imgup. Upload and share your own images instantly.`,
 		openGraph: {
 			type: 'website',
 			url: pageUrl,
 			siteName: 'Imgup',
 			title: `Shared Image | Imgup`,
-			description: `View and download this image shared via Imgup. Upload and share your own images instantly.`,
+			description: `View this image shared via Imgup. Upload and share your own images instantly.`,
 			images: [
 				{
 					url: optimizedImageUrl,
@@ -95,7 +94,7 @@ export async function generateMetadata({
 		twitter: {
 			card: 'summary_large_image',
 			title: `Shared Image | Imgup`,
-			description: `View and download this image shared via Imgup.`,
+			description: `View this image shared via Imgup.`,
 			images: [optimizedImageUrl],
 		},
 	};

@@ -7,7 +7,6 @@ const getImageUrl: (slug: string) => Promise<string | null> = async (
 	try {
 		const res: Response = await fetch(
 			`https://imgup.sujalgoel.me/api/image/${slug}`,
-			// `http://localhost:3000/api/image/${slug}`,
 			{
 				cache: 'no-store',
 			},

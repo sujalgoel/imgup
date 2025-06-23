@@ -1,4 +1,4 @@
-![IMGUP](./public/thumbnail.png)
+![IMGUP](./public/thumbnail.jpg)
 
 ## What is IMGUP?
 
